@@ -7,6 +7,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors();
+
   const config = new DocumentBuilder()
   .setTitle('Blog Pessoal')
   .setDescription('Projeto Blog Pessoal')
@@ -20,12 +22,7 @@ async function bootstrap() {
   process.env.TZ = '-03:00';
 
   app.useGlobalPipes(new ValidationPipe());
-  app.enableCors({
-    origin: 'localhost:4000',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: 'Content-Type, Authorization',
-  });
-
+  
   await app.listen(process.env.PORT ?? 4000);
 }
 bootstrap();
